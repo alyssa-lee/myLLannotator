@@ -162,9 +162,9 @@ def main():
     elif args.model == 2:
         annotate_source_with_ollama("gpt-oss:120b-cloud", "../results/gpt-oss_120b-cloud_gbk-annotation-table.csv", TEST_MODE=False)
     if args.model == 3:
-        annotate_lifestyle_with_ollama("llama3.2:latest", "../results/llama3.2_latest_Complete-Genomes-with-lifestyle-annotation.csv", TEST_MODE=True)
+        annotate_lifestyle_with_ollama("llama3.2:latest", "../results/llama3.2_latest_Complete-Genomes-with-lifestyle-annotation.csv", TEST_MODE=False)
     elif args.model == 4:
-        annotate_lifestyle_with_ollama("gpt-oss:120b-cloud", "../results/gpt-oss_120b-cloud_Complete-Genoems-with-lifestyle-annotation.csv", TEST_MODE=True)
+        annotate_lifestyle_with_ollama("gpt-oss:120b-cloud", "../results/gpt-oss_120b-cloud_Complete-Genoems-with-lifestyle-annotation.csv", TEST_MODE=False)
     return
 
 

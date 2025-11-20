@@ -24,7 +24,7 @@ def annotate_source_with_ollama(model_name, output_path, TEST_MODE=True):
     
     ## configuration variables
     N_EXAMPLE = 10
-    DEBUGGING = False
+    DEBUGGING = True
 
     if TEST_MODE: ## then just annotate a few genomes.
         df = df.head(n=N_EXAMPLE)
@@ -62,7 +62,7 @@ def annotate_source_with_ollama(model_name, output_path, TEST_MODE=True):
             model=model_name,
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": "Consider a microbial sample from the host " + input_host + " and the isolation source " + input_isolation_source + ". Label the sample as one of the following categories: " + categories_str + ". Give a strictly one-word response capitalizing the first letter without punctuation marks."},
+                {"role": "user", "content": "Consider a microbial sample from the host " + input_host + " and the isolation source " + input_isolation_source + ". Label the sample as one of the following categories: " + categories_str + ". Give a strictly one-word response without punctuation marks."},
             ]
         )
 

@@ -5,18 +5,20 @@ annotator.py by Alyssa Lee and Rohan Maddamsetti.
 
 Usage: Run this script in parallel in separate terminal windows as follows:
 python annotator.py 1
-python annotator.py 2
 python annotator.py 3
-python annotator.py 4
+
 
 Results:
+Annotating to replace my semi-manual code.
 python annotator.py 1:
 25221/25221 1:59:12 run time.
 llama3.2:latest accuracy: 0.7919194322191824 (19973 out of 25221)
 
+Annotating endosymbionts.
 python annotator.py 3:
+llama3.2:latest: 18938/18938 [2:14:56<00:00,  2.34it/s]
 
-
+right now, gpt-oss is too slow, and the cloud model stops working after several hundred iterations for reasons I don't understand.
 
 """ 
 
@@ -69,17 +71,19 @@ def annotate_source_with_ollama(model_name, output_path, TEST_MODE=True):
         while not cur_row_annotated: 
 
             system_prompt = "You are an annotation tool for labeling the environment category that a microbial sample came from, given the host and isolation source metadata reported for this genome. Label the sample as one of the following categories: " + categories_str + " by following the following criteria. Samples from a human body should be labeled 'Humans'. Samples from domesticated or farm animals should be labeled 'Livestock'. Samples from food should be labeled 'Food'. Samples from freshwater should be labeled 'Freshwater'. Samples from a human-impacted environment or an anthropogenic environmental source should be labeled 'Anthropogenic'. Samples from the ocean, including the deep ocean should be labeled 'Marine'. Samples from anoxic sediments, including aquatic sediments should be labeled 'Sediment'. Samples from domesticated plants and crops should be labeled 'Agriculture'. Samples from soil, including farm soil should be labeled 'Soil'. Samples from extreme terrestrial environments (extreme temperature, pH, or salinity) should be labeled 'Terrestrial'. Samples from non-domesticated or wild plants should be labeled 'Plants'. Samples from non-domesticated or wild animals, including invertebrates, and also including protists and fungi even though these are not strictly animals should be labeled 'Animals'. Samples that lack enough information in the host metadata and isolation source metadata provided or have missing or incomplete information in these fields should be labeled 'NA'. Give a strictly one-word response that exactly matches of these categories, omitting punctuation marks."
+
+            if "gpt-oss" in model_name: ## to increase speed.
+                system_prompt += "Reasoning: low"
+
             
-            try: ## In case of network error or some error when working with an LM cloud API call.
-                LLMresponse  = ollama.chat(
-                    model=model_name,
-                    messages=[
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": "Consider a microbial sample from the host " + input_host + " and the isolation source " + input_isolation_source + ". Label the sample as one of the following categories: " + categories_str + ". Give a strictly one-word response without punctuation marks."},
-                    ]
-                )
-            except: ## try again if there was a network error or anything else.
-                continue
+            LLMresponse  = ollama.chat(
+                model=model_name,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": "Consider a microbial sample from the host " + input_host + " and the isolation source " + input_isolation_source + ". Label the sample as one of the following categories: " + categories_str + ". Give a strictly one-word response without punctuation marks."},
+                ]
+            )
+
                 
             ## check if the LLM annotation matches one of the given categories for annotation.
             if LLMresponse.message.content in categories:
@@ -135,17 +139,17 @@ def annotate_lifestyle_with_ollama(model_name, output_path, TEST_MODE=True):
         while not cur_row_annotated: 
 
             system_prompt = "You are an annotation tool for labeling microbial samples, given its species names and the host and isolation source metadata reported for this sample. Label the sample as one of the following categories: " + categories_str + " by following the following criteria. Samples from blood, organs, or diseased sites or disease should be labeled 'Pathogen'. Samples from normal or healthy plant or animal or human body sites should be labeled 'Commensal'. Samples from the environment should be labeled 'Environmental'. Samples that are obligate endosymbionts, based on its species and isolation from its obligate plant or animal host and isolation source should be labeled 'Endosymbiont'. Samples that lack enough information in the host metadata and isolation source metadata provided or have missing or incomplete information in these fields should be labeled 'NA'. Give a strictly one-word response that exactly matches these categories, omitting punctuation marks."
+
+            if "gpt-oss" in model_name: ## to increase speed.
+                system_prompt += "Reasoning: low"
             
-            try: ## In case of network error or some error when working with an LM cloud API call.
-                LLMresponse  = ollama.chat(
-                    model=model_name,
-                    messages=[
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": "Consider a microbial sample of the species " + input_organism + " from the host " + input_host + " and the isolation source " + input_isolation_source + ". Label the sample as one of the following categories: " + categories_str + ". Give a strictly one-word response without punctuation marks."},
-                    ]
-                )
-            except: ## try again if there was a network error or anything else.
-                continue
+            LLMresponse  = ollama.chat(
+                model=model_name,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": "Consider a microbial sample of the species " + input_organism + " from the host " + input_host + " and the isolation source " + input_isolation_source + ". Label the sample as one of the following categories: " + categories_str + ". Give a strictly one-word response without punctuation marks."},
+                ]
+            )
 
             ## check if the LLM annotation matches one of the given categories for annotation.
             if LLMresponse.message.content in categories:
@@ -174,15 +178,19 @@ def main():
     )
     args = parser.parse_args()
 
-    ## I chose these two models because they run rather quickly.
+    ## llama3.2:latest runs quickly. gpt-oss:latest is slow. gpt-oss:120b-cloud stops working after some iterations-- unclear how and why right now.
     if args.model == 1:
         annotate_source_with_ollama("llama3.2:latest", "../results/llama3.2_latest_gbk-annotation-table.csv", TEST_MODE=False)
-    elif args.model == 2:
-        annotate_source_with_ollama("gpt-oss:120b-cloud", "../results/gpt-oss_120b-cloud_gbk-annotation-table.csv", TEST_MODE=False)
-    if args.model == 3:
+##    elif args.model == 2:
+##        annotate_source_with_ollama("gpt-oss:120b-cloud", "../results/gpt-oss_120b-cloud_gbk-annotation-table.csv", TEST_MODE=False)
+##    elif args.model == 9:
+##        annotate_source_with_ollama("gpt-oss:latest", "../results/gpt-oss_latest_gbk-annotation-table.csv", TEST_MODE=False)
+    elif args.model == 3:
         annotate_lifestyle_with_ollama("llama3.2:latest", "../results/llama3.2_latest_Complete-Genomes-with-lifestyle-annotation.csv", TEST_MODE=False)
-    elif args.model == 4:
-        annotate_lifestyle_with_ollama("gpt-oss:120b-cloud", "../results/gpt-oss_120b-cloud_Complete-Genoems-with-lifestyle-annotation.csv", TEST_MODE=False)
+##    elif args.model == 8:
+##        annotate_lifestyle_with_ollama("gpt-oss:latest", "../results/gpt-oss_latest_Complete-Genomes-with-lifestyle-annotation.csv", TEST_MODE=False)
+##    elif args.model == 5:
+##        annotate_lifestyle_with_ollama("gpt-oss:120b-cloud", "../results/gpt-oss_120b-cloud_Complete-Genoems-with-lifestyle-annotation.csv", TEST_MODE=False)
     return
 
 

@@ -12,6 +12,7 @@ library(tidyverse)
 library(cowplot)
 library(data.table)
 library(stringi)
+library(ggalluvial)
 
 ################################################################################
 ## Regular expressions used in this analysis.
@@ -347,6 +348,45 @@ reannotated.duplicate.proteins <- ground.truth.duplicate.proteins %>%
 
 
 ##########################################################################
+## Data structure for alluvial diagram of reannotations.
+
+head(ground.truth.gbk.annotation)
+
+manual.annotation.df <- ground.truth.gbk.annotation %>%
+    select(Annotation_Accession, Annotation) %>%
+    rename(Original = "Annotation")
+
+llama.annotation.df <- llama3.2.gbk.annotation %>%
+        select(Annotation_Accession, Annotation) %>%
+    rename(LLM = "Annotation")
+
+lifestyle.reannotation.df <- gbk.reannotation %>%
+        select(Annotation_Accession, Annotation) %>%
+    rename(Lifestyle = "Annotation")
+
+alluvial.plot.df <- manual.annotation.df %>%
+    inner_join(llama.annotation.df) %>%
+    inner_join(lifestyle.reannotation.df) %>%
+    ## aggregate the counts in each category
+    group_by(Original, LLM, Lifestyle) %>%
+    summarize(Count = n()) %>%
+    as.data.frame()
+
+## validate the data.frame
+is_alluvia_form(alluvial.plot.df, axes = 1:3, silent = TRUE)
+
+## make the plot
+alluvial.plot <- ggplot(alluvial.plot.df,
+       aes(y = Count, axis1 = Original, axis2 = LLM, axis3 = Lifestyle)) +
+    geom_alluvium(aes(fill = Original), width = 1/12) +
+    geom_stratum(width = 1/12, fill = "black", color = "grey") +
+    geom_label(stat = "stratum", aes(label = after_stat(stratum))) +
+    scale_x_discrete(limits = c("Original", "LLM", "Lifestyle"), expand = c(.05, .05)) +
+    scale_fill_brewer(type = "qual", palette = "Set1") +
+    ggtitle("Microbial genomes reannotated with llama 3.2") +
+    theme_classic()
+
+##########################################################################
 ## Data structures for Figure 1AB.
 
 ## Data structure for Figure 1AB:
@@ -425,8 +465,8 @@ Fig1G <- make.confint.figure.panel(reannotated.TableS3, new.order.by.total.isola
                                    "All D-genes in genomes\nreannotated by llama3.2")
 
 Fig1ABCDEFG <- plot_grid(
-    Fig1A, NULL, Fig1B, Fig1C, Fig1D, Fig1E, Fig1F, Fig1G,
-    labels=c('A', '', 'B', 'C', 'D', 'E', 'F', 'G'), nrow=4)
+    Fig1A, alluvial.plot, Fig1B, Fig1C, Fig1D, Fig1E, Fig1F, Fig1G,
+    labels=c('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'), nrow=4)
 
 ggsave("../results/Fig1ABCDEFG.pdf", Fig1ABCDEFG, height=8,width=7)
 

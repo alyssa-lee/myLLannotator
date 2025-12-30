@@ -5,7 +5,7 @@ annotator.py by Alyssa Lee and Rohan Maddamsetti.
 
 Usage: Run this script in parallel in separate terminal windows as follows:
 python annotator.py 1
-python annotator.py 3
+python annotator.py 2
 
 
 Results:
@@ -15,10 +15,8 @@ python annotator.py 1:
 llama3.2:latest accuracy: 0.7919194322191824 (19973 out of 25221)
 
 Annotating endosymbionts.
-python annotator.py 3:
+python annotator.py 2:
 llama3.2:latest: 18938/18938 [2:14:56<00:00,  2.34it/s]
-
-right now, gpt-oss is too slow, and the cloud model stops working after several hundred iterations for reasons I don't understand.
 
 """ 
 
@@ -170,7 +168,7 @@ def annotate_lifestyle_with_ollama(model_name, output_path, TEST_MODE=True):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="My LiL Annotator")
+    parser = argparse.ArgumentParser(description="myLLannotator")
     parser.add_argument(
         "model",
         type=int,
@@ -181,16 +179,8 @@ def main():
     ## llama3.2:latest runs quickly. gpt-oss:latest is slow. gpt-oss:120b-cloud stops working after some iterations-- unclear how and why right now.
     if args.model == 1:
         annotate_source_with_ollama("llama3.2:latest", "../results/llama3.2_latest_gbk-annotation-table.csv", TEST_MODE=False)
-##    elif args.model == 2:
-##        annotate_source_with_ollama("gpt-oss:120b-cloud", "../results/gpt-oss_120b-cloud_gbk-annotation-table.csv", TEST_MODE=False)
-##    elif args.model == 9:
-##        annotate_source_with_ollama("gpt-oss:latest", "../results/gpt-oss_latest_gbk-annotation-table.csv", TEST_MODE=False)
-    elif args.model == 3:
+    elif args.model == 2:
         annotate_lifestyle_with_ollama("llama3.2:latest", "../results/llama3.2_latest_Complete-Genomes-with-lifestyle-annotation.csv", TEST_MODE=False)
-##    elif args.model == 8:
-##        annotate_lifestyle_with_ollama("gpt-oss:latest", "../results/gpt-oss_latest_Complete-Genomes-with-lifestyle-annotation.csv", TEST_MODE=False)
-##    elif args.model == 5:
-##        annotate_lifestyle_with_ollama("gpt-oss:120b-cloud", "../results/gpt-oss_120b-cloud_Complete-Genoems-with-lifestyle-annotation.csv", TEST_MODE=False)
     return
 
 

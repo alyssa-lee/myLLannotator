@@ -323,7 +323,47 @@ alluvial.plot.df <- manual.annotation.df %>%
 ## validate the data.frame
 is_alluvia_form(alluvial.plot.df, axes = 1:3, silent = TRUE)
 
-##########################################################################
+
+################################################################################
+## count the number of matches between the Original and LLM columns.
+
+precision.df <- full_join(manual.annotation.df, llama.annotation.df) %>%
+    group_by(Original, LLM) %>%
+    summarize(Count = n())
+
+## get the total number of annotated genomes.
+## 18938 genomes here.
+sum(precision.df$Count)
+
+matched.precision.df <- precision.df %>%
+    select(Original, LLM, Count) %>%
+    filter(Original == LLM)
+
+## 15062 match.
+sum(matched.precision.df$Count)
+
+## 15062/18938 = 0.795.
+print(sum(matched.precision.df$Count)/sum(precision.df$Count))
+
+## repeat the calculation, excluding Unannotated Genomes
+precision.df2 <- precision.df %>%
+    filter(!is.na(LLM))
+
+## 18062 genomes here.
+sum(precision.df2$Count)
+
+matched.precision.df2 <- precision.df2 %>%
+    select(Original, LLM, Count) %>%
+    filter(Original == LLM)
+
+## 15062 match.
+sum(matched.precision.df2$Count)
+
+## 15062/18062 = 0.834 precision.
+print(sum(matched.precision.df2$Count)/sum(precision.df2$Count))
+
+
+################################################################################
 ## Data structure for Figure 1BC:
 ## normal-approximation confidence intervals for the percentage
 ## of isolates with duplicated ARGs.
@@ -333,7 +373,7 @@ llama3.2.TableS1 <- make.TableS1(llama3.2.gbk.annotation, llama3.2.duplicate.ARG
 
 reannotated.TableS1 <- make.TableS1(gbk.reannotation, reannotated.duplicate.ARGs)
 
-######################
+################################################################################
 ## Table S2. Control: does the distribution of ARG singletons
 ## (i.e. genes that have NOT duplicated) follow the distribution
 ## of sampled isolates?
@@ -352,12 +392,6 @@ reannotated.TableS2 <- make.TableS2(gbk.reannotation, reannotated.singleton.ARGs
 #########################################################################
 ## Table S3. Control: does the number of isolates with duplicate genes
 ## follow the sampling distribution of isolates?
-
-## Most follow the expected distribution.
-## however, isolates from animal-hosts are signficantly depleted
-## in duplicate genes: FDR-corrected p = 0.0000314
-## while isolates from anthropogenic environments are weakly enriched
-## in multi-copy genes: FDR-corrected p = 0.0212.
 
 ## Data structure for Figure 2C
 TableS3 <- make.TableS3(ground.truth.gbk.annotation, ground.truth.duplicate.proteins)
@@ -412,17 +446,17 @@ Fig1 <- plot_grid(Fig1A, Fig1BCD, labels=c("A", ""), nrow=2, rel_heights=c(3,1))
 ggsave("../results/Fig1.pdf", Fig1, height=7.5, width=9)
 
 
-Fig2A <- make.confint.figure.panel(TableS2, order.by.total.isolates,
-                                   "S-ARGs, original\nannotation")
-
-Fig2B <- make.confint.figure.panel(reannotated.TableS2, new.order.by.total.isolates,
-                                   "S-ARGs in genomes\nreannotated by lifestyle")
-
-Fig2C <- make.confint.figure.panel(TableS3, order.by.total.isolates,
+Fig2A <- make.confint.figure.panel(TableS3, order.by.total.isolates,
                                    "All D-genes, original\nannotation")
 
-Fig2D <- make.confint.figure.panel(reannotated.TableS3, new.order.by.total.isolates,
+Fig2B <- make.confint.figure.panel(TableS2, order.by.total.isolates,
+                                   "S-ARGs, original\nannotation")
+
+Fig2C <- make.confint.figure.panel(reannotated.TableS3, new.order.by.total.isolates,
                                    "All D-genes in genomes\nreannotated by lifestyle")
+
+Fig2D <- make.confint.figure.panel(reannotated.TableS2, new.order.by.total.isolates,
+                                   "S-ARGs in genomes\nreannotated by lifestyle")
 
 
 Fig2 <- plot_grid(Fig2A, Fig2B, Fig2C, Fig2D,

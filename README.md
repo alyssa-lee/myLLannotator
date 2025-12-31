@@ -20,7 +20,8 @@ details go here
 ### Replicating results in the paper
 
 1. **Create a project directory**:
-   ```mkdir myLLannotator
+   ```
+   mkdir myLLannotator/
    cd myLLannotator/
    mkdir results
    ```

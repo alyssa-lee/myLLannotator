@@ -2,7 +2,7 @@
 
 Alyssa Lee and Rohan Maddamsetti
 
-
+![A muscular cyborg rainbow llama with a face stripe like ziggy stardust and a long rainbow mane working hard on a laptop](a-muscular-cyborg-rainbow-llama-with-a-face-stripe-like-ziggy-stardust-and-a-long-rainbow-mane-working-hard-on-a-laptop/llama-1.jpg)
 ## Overview
 
 details go here

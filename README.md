@@ -29,6 +29,6 @@ details go here
    2. **Download data into the project directory**
    Go to https://zenodo.org/records/18110824 and save the download as a directory `data/` in the project directory.
    3. **Download this github repository**
-   Download this github repository as save the download as a directory `src/` in the project directory.
+   Save the download as a directory `src/` in the project directory.
    4. Run the R script `src/simple-ARG-duplication-analysis.R` to generate figures and run the analysis.
    

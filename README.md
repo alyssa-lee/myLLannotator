@@ -2,7 +2,7 @@
 
 Alyssa Lee and Rohan Maddamsetti
 
-![A muscular cyborg rainbow llama with a face stripe like ziggy stardust and a long rainbow mane working hard on a laptop](a-muscular-cyborg-rainbow-llama-with-a-face-stripe-like-ziggy-stardust-and-a-long-rainbow-mane-working-hard-on-a-laptop/llama-1.jpg)
+![A muscular cyborg rainbow llama with a face stripe like ziggy stardust and a long rainbow mane working hard on a laptop](img/llama-1.jpg)
 ## Overview
 
 details go here
@@ -15,7 +15,10 @@ details go here
 
 ## Usage
 
-details go here
+How to run (without package built):
+
+uv run main.py input/valid_categories.txt input/system_prompt.txt input/per_sample_prompt.txt input/input_data.csv output/annotated_data.csv
+
 
 ### Replicating results in the paper
 

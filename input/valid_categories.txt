@@ -1,0 +1,13 @@
+Humans
+Livestock
+Food
+Freshwater
+Anthropogenic
+Marine
+Sediment
+Agriculture
+Soil
+Terrestrial
+Plants
+Animals
+NA

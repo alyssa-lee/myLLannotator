@@ -1,7 +1,7 @@
 [project]
 name = "myllannotator"
 version = "0.1.0"
-description = "Add your description here"
+description = "User-friendly tool for automated annotation of metadata with open-source LLM"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -10,3 +10,11 @@ dependencies = [
     "pandas>=2.3.3",
     "tqdm>=4.67.1",
 ]
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["myllannotator/"]
+

@@ -11,10 +11,20 @@ dependencies = [
     "tqdm>=4.67.1",
 ]
 
+[project.scripts]
+myllannotator = "myllannotator.main:main"
+
 [build-system]
 build-backend = "hatchling.build"
 requires = ["hatchling"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["myllannotator/"]
+packages = ["src/myllannotator/"]
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
+
 

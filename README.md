@@ -83,9 +83,7 @@ The system prompt guides the LLM's overall behavior. Here you should give specif
 Optionally, you can include `{categories}` somewhere in the text, which will be replaced by a comma-separated list of the values in `valid_categories` (for example, `"Human", "Animal", "NA"`). The tool will print the properly formatted version upon running so you can check if it is what you expected.
 
 Example:
-```
-You are an annotation tool for labeling the environment category that a microbial sample came from, given the host and isolation source metadata reported for this genome. Label the sample as one of the following categories: {categories} by following the following criteria. Samples from a human body should be labeled 'Humans'. Samples from domesticated or farm animals [...] Give a strictly one-word response that exactly matches of these categories, omitting punctuation marks.
-```
+> ```You are an annotation tool for labeling the environment category that a microbial sample came from, given the host and isolation source metadata reported for this genome. Label the sample as one of the following categories: {categories} by following the following criteria. Samples from a human body should be labeled 'Humans'. Samples from domesticated or farm animals [...] Give a strictly one-word response that exactly matches of these categories, omitting punctuation marks.```
 
 ### per_sample_prompt (.txt)
 The per-sample prompt tells the LLM the relevant metadata for each sample.
@@ -95,14 +93,10 @@ The way you write this prompt **will depend on the columns in your input data**.
 Optionally, you can include `{categories}` somewhere in the text, which will be replaced by a comma-separated list of the values in `valid_categories` (for example, `"Human", "Animal", "NA"`). The tool will print the properly formatted version upon running so you can check if it is what you expected.
 
 Example (for an input dataset with three columns `Annotation_Accession,host,isolation_source`):
-```
-Consider a microbial sample from the host "{1}" and the isolation source "{2}". Label the sample as one of the following categories: {categories}. Give a strictly one-word response without punctuation marks.
-```
+> ```Consider a microbial sample from the host "{1}" and the isolation source "{2}". Label the sample as one of the following categories: {categories}. Give a strictly one-word response without punctuation marks.```
 
 For the first sample, the prompt received by the LLM will be:
-```
-Consider a microbial sample from the host "chicken" and the isolation source "Epidemic materials". Label the sample as one of the following categories: "Humans", "Livestock", "Food", "Freshwater", "Anthropogenic", "Marine", "Sediment", "Agriculture", "Soil", "Terrestrial", "Plants", "Animals", "NA". Give a strictly one-word response without punctuation marks.
-```
+> ```Consider a microbial sample from the host "chicken" and the isolation source "Epidemic materials". Label the sample as one of the following categories: "Humans", "Livestock", "Food", "Freshwater", "Anthropogenic", "Marine", "Sediment", "Agriculture", "Soil", "Terrestrial", "Plants", "Animals", "NA". Give a strictly one-word response without punctuation marks.```
 
 
 ### input_csv (.csv)

@@ -24,11 +24,10 @@ def annotate_samples(args):
     print("Example prompt using the first line:")
     print(per_sample_prompt.format(*df.loc[0, :].values.flatten().tolist(), categories=categories_str))
 
-
     model_name = "llama3.2:latest"
 
     nrow = df.shape[0]
-    annotations = np.full(nrow, "NoAnnotation")
+    annotations = ["NoAnnotation" for i in range(nrow)]
 
     with open(args.output_csv, "w") as f:
         f.write(','.join([*list(df), "Annotation"]) + '\n')
@@ -61,6 +60,8 @@ def annotate_samples(args):
         with open(args.output_csv, "a") as f:
             f.write(','.join([*row_values, annotations[i]]) + '\n')
 
+    # df['Annotation'] = annotations
+    # df.to_csv("full_annotated_data.csv", index=False)
     return
 
 def main():

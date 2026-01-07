@@ -32,6 +32,11 @@ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://
 ```
 (Once it is published to PyPI, the command `pip install myllannotator` should work)
 
+How to install as a package from source:
+```
+pip install myllannotator-0.1.1.tar.gz
+```
+
 Download the model from ollama (This is a required step; working on getting it to download automatically):
 ```
 ollama run llama3.2:latest

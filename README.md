@@ -22,25 +22,35 @@ To reproduce paper figures:
 
 ## Installation
 
-There are two options for using this code. The first way is to install the prebuilt package, which should automatically install dependencies. The second way is to download the script `src/myllannotator/main.py` and run it directly (but you will have to install dependencies yourself).
+There are two options for using this code. The first way is to install the prebuilt package, which should automatically install dependencies. The second way is to download the script `src/myllannotator/main.py` and run it directly (but you will have to install dependencies yourself). (If you are doing this, skip this section.)
 
-The following sample commands use the example data under `input/` and write the output to a new file `annotated_data.csv`.
+The package can be installed from PyPI or from source (tarball).
 
-How to install as a package (test version on TestPyPI):
+### How to install as a package from PyPI:
+
+This is the test version on TestPyPI.
 ```
 pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple myllannotator
 ```
 (Once it is published to PyPI, the command `pip install myllannotator` should work)
 
-How to install as a package from source:
+### How to install as a package from source:
+
+First download the compressed binary from the latest [release](https://github.com/alyssa-lee/myLLannotator/tags). Then run:
 ```
 pip install myllannotator-0.1.1.tar.gz
 ```
 
-Download the model from ollama (This is a required step; working on getting it to download automatically):
+
+## Downloading the llama3.2 model
+Download the llama3.2 model from ollama, after installing the ollama package (This is a required step; working on getting it to download automatically):
 ```
 ollama run llama3.2:latest
 ```
+
+## How to run
+
+The following sample commands use the example data under `input/` and write the output to a new file `annotated_data.csv`.
 
 How to run with package installed:
 ```

@@ -1,8 +1,12 @@
 [project]
 name = "myllannotator"
-version = "0.1.0"
+version = "0.1.1"
 description = "User-friendly tool for automated annotation of metadata with open-source LLM"
 readme = "README.md"
+authors = [
+{ name = "Alyssa Lu Lee", email = "alyssalee@rutgers.edu" },
+{ name = "Rohan Maddamsetti", email = "rohan.maddamsetti@rutgers.edu" },
+]
 requires-python = ">=3.12"
 dependencies = [
     "numpy>=2.4.0",

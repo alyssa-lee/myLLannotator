@@ -32,6 +32,10 @@ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://
 ```
 (Once it is published to PyPI, the command `pip install myllannotator` should work)
 
+Download the model from ollama (This is a required step; working on getting it to download automatically):
+```
+ollama run llama3.2:latest
+```
 
 How to run with package installed:
 ```
@@ -86,9 +90,7 @@ You are an annotation tool for labeling the environment category that a microbia
 ### per_sample_prompt (.txt)
 The per-sample prompt tells the LLM the relevant metadata for each sample.
 
-The way you write this prompt **will depend on the columns in your input data**. 
-
-The tool will print the properly formatted version upon running so you can check if it is what you expected.
+The way you write this prompt **will depend on the columns in your input data**. Where you write `{0}` in the prompt, it will be replaced by the value in column 0 of the input data, `{1}` will be replaced by the value in column 1, etc. See the example below. The tool will print the properly formatted version upon running so you can check if it is what you expected.
 
 Optionally, you can include `{categories}` somewhere in the text, which will be replaced by a comma-separated list of the values in `valid_categories` (for example, `"Human", "Animal", "NA"`). The tool will print the properly formatted version upon running so you can check if it is what you expected.
 
@@ -105,7 +107,7 @@ Consider a microbial sample from the host "chicken" and the isolation source "Ep
 
 ### input_csv (.csv)
 
-This is your input data. It can have any number of columns. 
+This is your input data. It can have any number of columns. You will need to write your per-sample prompt according to the column order (see above).
 
 ```
 Annotation_Accession,host,isolation_source
@@ -129,9 +131,8 @@ GCF_900636445.1_41965_G01,NA,Oral Cavity,Humans
 
 
 ## Important notes on the behavior of myLLannotator
-- This tool is not deterministic. Different answers may be produced on the same input data between runs.
-- It will give up on labeling a particular sample after 5 failed attempts. In that case `NoAnnotation` will show up as the annotation.
-
+- The tool is not deterministic. Different answers may be produced on the same input data.
+- The tool will give up on labeling a particular sample after 5 failed attempts. In that case `NoAnnotation` will show up as the annotation.
 
 
 ## Replicating results in the paper

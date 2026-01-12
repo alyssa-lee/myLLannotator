@@ -1,7 +1,6 @@
 import argparse
 import ollama
 from tqdm import tqdm
-import numpy as np
 import pandas as pd
 
 def annotate_samples(args):

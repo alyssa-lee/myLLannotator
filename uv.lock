@@ -93,7 +93,6 @@ name = "myllannotator"
 version = "0.1.1"
 source = { editable = "." }
 dependencies = [
-    { name = "numpy" },
     { name = "ollama" },
     { name = "pandas" },
     { name = "tqdm" },
@@ -101,10 +100,9 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "numpy", specifier = ">=2.4.0" },
     { name = "ollama", specifier = ">=0.6.1" },
-    { name = "pandas", specifier = ">=2.3.3" },
-    { name = "tqdm", specifier = ">=4.67.1" },
+    { name = "pandas", specifier = ">=1.0.0" },
+    { name = "tqdm", specifier = ">=4.41.0" },
 ]
 
 [[package]]

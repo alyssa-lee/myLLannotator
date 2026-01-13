@@ -11,11 +11,11 @@ User-friendly tool for automated annotation of metadata with open-source LLM
 
 ## Requirements
 
-- python>=3.12
-- numpy>=2.4.0
+- python>=3.10
 - ollama>=0.6.1
-- pandas>=2.3.3
-- tqdm>=4.67.1
+- pandas>=1.4.0
+- tqdm>=4.41.0
+
 
 To reproduce paper figures:
 - R==4.2+ for generating figures and re-running analyses in this paper
@@ -38,12 +38,12 @@ pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://
 
 First download the compressed binary from the latest [release](https://github.com/alyssa-lee/myLLannotator/tags). Then run:
 ```
-pip install myllannotator-0.1.1.tar.gz
+pip install myllannotator-*.tar.gz
 ```
 
 
 ## Downloading the llama3.2 model
-Download the llama3.2 model from ollama, after installing the ollama package (This is a required step; working on getting it to download automatically):
+Download the llama3.2 model from ollama, after installing the ollama package (This is a required step.):
 ```
 ollama run llama3.2:latest
 ```

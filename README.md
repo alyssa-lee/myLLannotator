@@ -2,6 +2,17 @@
 
 Alyssa Lee and Rohan Maddamsetti
 
+1. [Requirements](#requirements)
+2. [Installation](#installation)
+   - [How to install as a package from PyPI](#how-to-install-as-a-package-from-pypi)
+   - [How to install as a package from source](#how-to-install-as-a-package-from-source)
+3. [Downloading the llama3.2 model](#downloading-the-llama32-model)
+4. [How to run](#how-to-run)
+5. [Usage](#usage)
+6. [Optional arguments and using other models](#optional-arguments-and-using-other-models)
+7. [Important caveats and troubleshooting](#important-caveats-and-troubleshooting)
+8. [Replicating results in the paper](#replicating-results-in-the-paper)
+
 ![A muscular cyborg rainbow llama with a face stripe like ziggy stardust and a long rainbow mane working hard on a laptop](img/llama-1.jpg)
 
 
@@ -175,7 +186,7 @@ ollama list
 
 
 
-## Important notes on the behavior of myLLannotator
+## Important caveats and troubleshooting
 - The tool is not deterministic. Different answers may be produced on the same input data.
 - The tool will give up on labeling a particular sample after the number of failed attempts exceeds the maximum limit. In that case `NoAnnotation` will show up as the annotation.
 - If you get an error like `ollama._types.ResponseError: model 'llama3.2:latest' not found (status code: 404)`, that means you have not downloaded the model from ollama. Run `ollama pull llama3.2:latest` to fix the error.

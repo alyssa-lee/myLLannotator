@@ -45,7 +45,7 @@ pip install myllannotator-*.tar.gz
 ## Downloading the llama3.2 model
 Download the llama3.2 model from ollama, after installing the ollama package (This is a required step.):
 ```
-ollama run llama3.2:latest
+ollama pull llama3.2:latest
 ```
 
 ## How to run
@@ -138,10 +138,47 @@ GCF_001635975.1_ASM163597v1,Homo sapiens,NA,Humans
 GCF_900636445.1_41965_G01,NA,Oral Cavity,Humans
 ```
 
+## Optional arguments and using other models
+Optional arguments:
+```
+options:
+  -h, --help            show this help message and exit
+  --model-name MODEL_NAME
+                        ollama model name, default is llama3.2:latest
+  --max-tries MAX_TRIES
+                        maximum number of attempts per sample if the LLM
+                        response is invalid, default is 5
+  --silent              if enabled, do not print usual prompt output
+  --debug               if enabled, print debug output, and only annotate the
+                        first 5 samples
+  --disable-system-role
+                        Disables the system role, instead having the system
+                        prompt come from the user. Set this option when using
+                        LLMs that do not have a system role.
+```
+
+We have only extensively tested the code with `llama3.2:latest`. Many other models are available at https://ollama.com/search of varying size, speed, and accuracy. Cloud models may not work due to limits on the number of queries.
+
+To use another model, first download the model, and then add the model name to your command. For example:
+
+```
+ollama pull gemma3:latest
+```
+
+And then modify your command to include `--model-name gemma3`:
+> ```myllannotator input/valid_categories.txt input/system_prompt.txt input/per_sample_prompt.txt input/input_data.csv annotated_data.csv --model-name gemma3 --debug --max-tries 3```
+
+To view all the models you have downloaded:
+```
+ollama list
+```
+
+
 
 ## Important notes on the behavior of myLLannotator
 - The tool is not deterministic. Different answers may be produced on the same input data.
-- The tool will give up on labeling a particular sample after 5 failed attempts. In that case `NoAnnotation` will show up as the annotation.
+- The tool will give up on labeling a particular sample after the number of failed attempts exceeds the maximum limit. In that case `NoAnnotation` will show up as the annotation.
+- If you get an error like `ollama._types.ResponseError: model 'llama3.2:latest' not found (status code: 404)`, that means you have not downloaded the model from ollama. Run `ollama pull llama3.2:latest` to fix the error.
 
 
 ## Replicating results in the paper

@@ -3,11 +3,6 @@
 ## on chromosomes versus plasmids in fully-sequenced genomes and plasmids
 ## in the NCBI RefSeq database (dated March 26 2021).
 
-## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-## CRITICAL TODO: Fix upstream bug where Anthropogenic is Anthropogeni.
-## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-## CRITICAL TODO: Fix upstream bug where Environmental is Environmenta
-
 library(tidyverse)
 library(cowplot)
 library(data.table)
@@ -64,6 +59,7 @@ read.LLM.gbk.annotation.csv <- function(gbk.annotation.path, ground.truth.gbk.an
         inner_join(relevant.ground.truth) %>%
         ## refer to NA annotations as "Unannotated".
         mutate(Annotation = replace_na(Annotation,"Unannotated")) %>%
+        mutate(Annotation = replace(Annotation, Annotation == "NoAnnotation", "Unannotated")) %>%
         ## collapse Annotations into a smaller number of categories as follows:
         ## Marine, Freshwater --> Water
         ## Sediment, Soil, Terrestrial --> Earth
@@ -77,12 +73,7 @@ read.LLM.gbk.annotation.csv <- function(gbk.annotation.path, ground.truth.gbk.an
         mutate(Annotation = replace(Annotation, Annotation == "Plants", "Plants & Animals")) %>%
         mutate(Annotation = replace(Annotation, Annotation == "Agriculture", "Plants & Animals")) %>%
         mutate(Annotation = replace(Annotation, Annotation == "Animals", "Plants & Animals")) %>%
-        ## CRITICAL TODO: FIX THIS UPSTREAM BUG
-        ## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        ## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        ## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    mutate(Annotation = replace(Annotation, Annotation == "Anthropogeni", "Human-impacted")) %>%
-##        mutate(Annotation = replace(Annotation, Annotation == "Anthropogenic", "Human-impacted")) %>%
+        mutate(Annotation = replace(Annotation, Annotation == "Anthropogenic", "Human-impacted")) %>%
         ## And now remove all Unannotated genomes, since these are not analyzed
         ## at all in this first paper.
         filter(Annotation != "Unannotated") %>%
@@ -277,12 +268,7 @@ gbk.reannotation <- read.csv("../results/llama3.2_latest_Complete-Genomes-with-l
     mutate(Annotation = replace_na(Annotation,"Unannotated")) %>%
     ## And now remove all Unannotated genomes, since these are not analyzed
     ## at all in this first paper.
-    filter(Annotation != "Unannotated") %>%
-    ## CRITICAL TODO: FIX THIS UPSTREAM BUG
-    ## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    ## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    ## !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    mutate(Annotation = replace(Annotation, Annotation == "Environmenta", "Environmental"))
+    filter(Annotation != "Unannotated")
 
 ## and merge.
 reannotated.singleton.ARGs <- ground.truth.singleton.ARGs %>%

@@ -43,7 +43,7 @@ def annotate_source_with_ollama(model_name, output_path, TEST_MODE=True):
         ground_truth = ground_truth.head(n=N_EXAMPLE)
 
     nrow = df.shape[0]
-    annotations = np.full(nrow, "NoAnnotation")
+    annotations = ["NoAnnotation" for i in range(nrow)]
     categories = [
         "Agriculture",
         "Animals",

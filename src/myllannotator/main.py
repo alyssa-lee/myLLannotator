@@ -1,14 +1,18 @@
 import argparse
 import ollama
 from tqdm import tqdm
-import pandas as pd
+import csv
 
 def annotate_samples(args):
     if args.debug:
         print("Settings: ")
         print(args)
 
-    df = pd.read_csv(args.input_csv, na_filter=False)
+    with open(args.input_csv, newline='') as csvfile:
+        csvreader = csv.reader(csvfile)
+        data = [row for row in csvreader]
+        header = data[0]
+        data = data[1:]
 
     with open(args.valid_categories) as f:
         categories = [line.rstrip() for line in f]
@@ -26,22 +30,22 @@ def annotate_samples(args):
         print("\n")
 
         print("Example prompt using the first line:")
-        print(per_sample_prompt.format(*df.loc[0, :].values.flatten().tolist(), categories=categories_str))
+        print(per_sample_prompt.format(*data[0], categories=categories_str))
         print("\n")
 
-    nrow = df.shape[0]
+    nrow = len(data)
     if args.debug and nrow > 5:
         nrow = 5
 
     annotations = ["NoAnnotation" for i in range(nrow)]
 
     with open(args.output_csv, "w") as f:
-        f.write(','.join([*list(df), "Annotation"]) + '\n')
+        f.write(','.join([*header, "Annotation"]) + '\n')
 
     for i in tqdm(range(nrow)):
         cur_row_annotated = False
 
-        row_values = df.loc[i, :].values.flatten().tolist()
+        row_values = data[i]
         tries = 0
 
         ## retry until the model does it right

@@ -24,7 +24,6 @@ User-friendly tool for automated annotation of metadata with open-source LLM
 
 - python>=3.10
 - ollama>=0.6.1
-- pandas>=1.4.0
 - tqdm>=4.41.0
 
 

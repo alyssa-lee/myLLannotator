@@ -193,16 +193,28 @@ ollama list
 
 ## Replicating results in the paper
 
-1. **Create a project directory**:
-   ```
-   mkdir myLLannotator/
-   cd myLLannotator/
-   mkdir results
-   ```
-   
-   2. **Download data into the project directory**
-   Go to https://zenodo.org/records/18110824 and save the download as a directory `data/` in the project directory.
-   3. **Download this github repository**
-   Save the download as a directory `src/` in the project directory.
-   4. Run the R script `src/simple-ARG-duplication-analysis.R` to generate figures and run the analysis.
+1. **Download data:**
+Go to https://rutgers.box.com/v/myLLannotator-data and click the button to download the data.
+2. Unzip `myLLannotator-data.zip` and go into the project directory: `cd myLLannotator-data`
+3. **Download scripts from this github repository:**
+Save `paper/annotator.py` and  `paper/simple-ARG-duplication-analysis.R` into a new subdirectory `src/`. Your file structure should look like this:
+
+```
+myLLannotator-data
+├── data
+│   └── Maddamsetti2024
+│       ├── all-proteins.csv
+│       ├── computationally-annotated-gbk-annotation-table.csv
+│       ├── duplicate-proteins.csv
+│       ├── FileS3-Complete-Genomes-with-Duplicated-ARG-annotation.csv
+│       └── gbk-annotation-table.csv
+├── results
+└── src
+    ├── annotator.py
+    └── simple-ARG-duplication-analysis.R
+```
+4. Make sure [required dependencies](#requirements) are installed.
+5. Run the python script `src/annotator.py` to annotate the data. Output files will be saved to the `results` folder.
+6. Run the R script `src/simple-ARG-duplication-analysis.R` to run the analysis and generate figures.
+
    

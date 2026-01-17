@@ -1,6 +1,25 @@
 # myLLannotator
+## Overview
 
-Alyssa Lee and Rohan Maddamsetti
+User-friendly tool for automated annotation of metadata with open-source LLM
+
+by Alyssa Lu Lee and Rohan Maddamsetti
+
+## Quickstart
+
+### Step-by-step installation with conda
+```
+conda create -n myllannotator-env
+conda activate myllannotator-env
+conda install pip
+pip install myllannotator
+ollama pull llama3.2:latest
+myllannotator --help
+```
+
+See [How to run](#how-to-run) and [Usage](#usage). Example input files are located in `input/`.
+
+## Documentation
 
 1. [Requirements](#requirements)
 2. [Installation](#installation)
@@ -16,10 +35,6 @@ Alyssa Lee and Rohan Maddamsetti
 ![A muscular cyborg rainbow llama with a face stripe like ziggy stardust and a long rainbow mane working hard on a laptop](img/llama-1.jpg)
 
 
-## Overview
-
-User-friendly tool for automated annotation of metadata with open-source LLM
-
 ## Requirements
 
 - python>=3.10
@@ -32,17 +47,15 @@ To reproduce paper figures:
 
 ## Installation
 
-There are two options for using this code. The first way is to install the prebuilt package, which should automatically install dependencies. The second way is to download the script `src/myllannotator/main.py` and run it directly (but you will have to install dependencies yourself). (If you are doing this, skip this section.)
+There are two options for using this code. The first way is to install the prebuilt package, which should automatically install dependencies. The second way is to download the script `src/myllannotator/main.py` and run it directly (but you will have to install dependencies yourself).
 
 The package can be installed from PyPI or from source (tarball).
 
 ### How to install as a package from PyPI:
 
-This is the test version on TestPyPI.
 ```
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple myllannotator
+pip install myllannotator
 ```
-(Once it is published to PyPI, the command `pip install myllannotator` should work)
 
 ### How to install as a package from source:
 

@@ -5,6 +5,8 @@ User-friendly tool for automated annotation of metadata with open-source LLM
 
 by Alyssa Lu Lee and Rohan Maddamsetti
 
+[Github](https://github.com/alyssa-lee/myLLannotator)
+
 ## Quickstart
 
 ### Step-by-step installation with conda
@@ -209,8 +211,8 @@ ollama list
 1. **Download data:**
 Go to https://rutgers.box.com/v/myLLannotator-data and click the button to download the data.
 2. Unzip `myLLannotator-data.zip` and go into the project directory: `cd myLLannotator-data`
-3. **Download scripts from this github repository:**
-Save `paper/annotator.py` and  `paper/simple-ARG-duplication-analysis.R` into a new subdirectory `src/`. Your file structure should look like this:
+3. **Download scripts from github repository:**
+Save `paper/annotator.py` and `paper/simple-ARG-duplication-analysis.R` into a new subdirectory `src/`. Your file structure should look like this:
 
 ```
 myLLannotator-data

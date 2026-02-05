@@ -5,8 +5,12 @@ User-friendly tool for automated annotation of metadata with open-source LLM
 
 by Alyssa Lu Lee and Rohan Maddamsetti
 
+[Check out our manuscript on bioRxiv!](https://www.biorxiv.org/content/10.64898/2026.01.18.700140v1)
+
+[Blog post](https://alyssa-lee.github.io/blog/2026/my-first-first-author-preprint-is-out/)
+
 [Github](https://github.com/alyssa-lee/myLLannotator)  
-[Manuscript on BioRxiv](https://www.biorxiv.org/content/10.64898/2026.01.18.700140v1)
+
 
 ## Quickstart
 

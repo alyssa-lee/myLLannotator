@@ -1,4 +1,7 @@
 # myLLannotator
+
+![graphical-abstract](img/graphical-abstract.png)
+
 ## Overview
 
 User-friendly tool for automated annotation of metadata with open-source LLM
@@ -34,7 +37,6 @@ See [How to run](#how-to-run) and [Usage](#usage). Example input files are locat
 7. [Important caveats and troubleshooting](#important-caveats-and-troubleshooting)
 8. [Replicating results in the paper](#replicating-results-in-the-paper)
 
-![A muscular cyborg rainbow llama with a face stripe like ziggy stardust and a long rainbow mane working hard on a laptop](img/llama-1.jpg)
 
 
 ## Requirements
